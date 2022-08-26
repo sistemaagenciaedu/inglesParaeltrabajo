@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" 
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingles IT</title>
+</head>
+
+<body>
+    <nav th:replace="/navfoo :: naving"></nav>
+    <div class="cabecero-ingre-con">
+        
+        <h2>
+
+            ¡Bienvenido/a! <br>
+            El formulario que estás por iniciar es para pre-inscribirte a
+            </h2>
+            <img class="logi" th:src="@{/img/IPET-IT-logo.png}" alt="">
+        <h1>Curso de Inglés para el trabajo</h1>
+        
+    </div>
+    <div class="cuerpodni">
+        
+
+      
+        
+        <img class="fondo-cuerpo" th:src="@{/img/fondo1.png}" alt="">
+        <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            rel="stylesheet">
+        <style>
+            .logi{
+                width: 250px;
+            }
+            .cabecero-ingre-con {
+               
+                width: 100%;
+                min-height: 150px;
+                display: flex;
+                flex-direction: column;
+                gap: 35px;
+                justify-content: center;
+                align-items: center;
+                align-content: center;
+             
+                font-family: 'Montserrat', sans-serif;
+                text-align: center;
+                align-items: center;
+                align-content: center;
+                padding-top: 2em;
+                padding-bottom: 2em;
+
+            }
+
+            .cabecero-ingre-con h1,
+            .cabecero-ingre-con h4,.cabecero-ingre-con h2 {
+                font-weight: 400;
+                display: flex;
+                width: 100%;
+                justify-content: center;
+                align-items: center;
+                align-content: center;
+
+            }
+
+            .cabecero-ingre-con h1 {
+                font-size: 2em;
+            }
+
+            .cabecero-ingre-con h4 {
+                font-size: 1.2em;
+            }
+
+            .fondo-cuerpo {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                position: absolute;
+                z-index: -2;
+                top: 0;
+                left: 0;
+            }
+
+            .cuerpodni {
+               
+                min-height: 100vh;
+position: relative;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                align-content: center;
+                font-family: 'Montserrat', sans-serif;
+                z-index: +1;
+            }
+
+            .cuerpodni h1,
+            .cuerpodni h4 {
+                font-weight: 300;
+                display: flex;
+                flex-wrap: wrap;
+                text-align: center;
+            }
+
+            .cuerpodni form {
+                display: flex;
+                flex-direction: column;
+               
+                gap: 10px;
+                width: 300px;
+                height: 300px;
+                justify-content: center;
+                align-items: center;
+                align-items: content;
+            }
+
+            #docenviar {
+                padding: 1em;
+                width: 40%;
+                border: none;
+                border-radius: 5px;
+                background-color: #fcda59;
+                color: black;
+                font-weight: bold;
+            }
+
+            #docenviar:hover {
+                background-color: #fdd306;
+            }
+
+            #doc {
+                padding: 1em;
+                width: 40%;
+                border: 1px solid #c5c3c2;
+                box-shadow: 0 0 4px #e5e5e5;
+                border-radius: 5px;
+                color: black;
+                font-weight: bold;
+            }
+
+            .advertencia {
+                width: 200px;
+                padding: 1em;
+                padding-left: 3em;
+                padding-right: 3em;
+                color: #e74c3c;
+                border-radius: 5px;
+                text-align: center;
+            }
+            .label{
+                text-align: center;
+            }
+            .centro-form{
+                margin-top: 2em;
+                margin-bottom: 2em;
+                background-color: white;
+                border-radius: 10px;
+                width: 50%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
+                box-shadow: 0 0 8px;
+                padding-bottom: 1em;
+                padding-top: 1em;
+            }
+            .consultas{
+                width: 80%;
+                text-align: center;
+            }
+            .centro-form{
+                font-size: 14px;
+                font-weight: 500;
+            }
+        </style>
+<div class="centro-form">
+    <span>Principales características del curso:</span>
+
+    <span>100% gratuito </span>
+    <span>Orientado a mejorar tus oportunidades en el sector IT </span>
+    <span>NO requiere conocimientos previos</span>
+    <span>100% virtual</span>
+    <span>16 semanas de duración</span>
+    <span>Contenido autoasistido + clases sincrónicas + tutorías</span>
+    <span>Laboratorios de conversación para practicar.</span>
+    <span> <b>Para inscribirte sólo tenés que:</b></span>
+    <span>1) Ser graduado/a de una oferta educativa en tecnología perteneciente a la Agencia de Aprendizaje a lo largo de la vida  </span>
+    <span>2) Completar tus datos personales. </span>
+    <span>3) Completar una breve prueba de nivelación. </span>
+    
+
+    <span>Todo el proceso te llevará entre 30 y 45 minutos. </span>
+    
+    
+            <form th:action="@{/ingresante/traer}" method="Post">
+    
+    
+                <label class="label" for="doc">Accedé con tu DNI al formulario de pre-inscripción</label>
+                <input type="text" name="doc" id="doc">
+                <input id="docenviar" type="submit" value="Continuar">
+                <p class="advertencia" th:text="${no}" th:if="${no != null}">*advertencia el dni ingresado no es valido</p>
+            </form>
+            <div class="consultas">
+                Por consultas o inconvenientes en tu pre-inscripción 
+        dejanos tus datos en el <br><a href="https://docs.google.com/forms/d/e/1FAIpQLSfDF8UWB3V9yfZXKuf6jyxdVjfd1C4OsS47lWD-9irlszP_ZQ/viewform">siguiente enlace</a>
+            </div>
+</div>
+  
+    </div>
+   
+    <footer th:replace="/navfoo :: footing"></footer>
+</body>
+
+</html>

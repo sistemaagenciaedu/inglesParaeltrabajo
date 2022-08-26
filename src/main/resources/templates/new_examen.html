@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" 
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+</head>
+
+
+
+<body>
+    <nav th:replace="/navfoo :: naving"></nav>
+    <div class="titulacion">
+        <h1 class="titulo1">Inglés para el Trabajo</h1>
+        <p class="titulo2">La siguiente prueba es sólo a los efectos de conocer tu nivel real de inglés.</p>
+        <p class="titulo2">El resultado no afecta a la
+            designación de vacantes.</p>
+        <p class="titulo2">Es muy importante que puedas aquí reflejar tus verdaderas hablidades en el idioma para</p>
+        <p class="titulo2"> conocerte más y así poder acompañarte en tu propio proceso de aprendizaje.</p>
+    </div>
+    <div class="cronometro">
+        <p class="titulo2"> Tiempo restante:</p>
+        <span hidden class="days"></span>
+        <span> <span class="hours"></span>
+            <span class="minutes"></span>
+            <span class="seconds"></span></span>
+        <span>minutos</span>
+    </div>
+
+    <div class="cuerpoexm">
+       
+        <img class="img" th:src="@{/img/fondo1.png}" alt="">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+            * {
+                font-family: 'Montserrat', sans-serif !important;
+            }
+
+            .titulacion {
+                padding: 1em;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                font-weight: 400;
+                font-family: 'Montserrat', sans-serif !important;
+                text-align: center;
+                width: 100%;
+                justify-content: center;
+                align-items: center;
+                align-content: center;
+            }
+
+            body {
+                position: relative;
+            }
+
+            .cuerpoexm {
+                min-height: 500px;
+                position: relative;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                align-content: center;
+                font-family: 'Montserrat', sans-serif;
+                font-size: small;
+
+            }
+
+            .img {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                z-index: -2 !important;
+            }
+
+            form {
+                display: flex;
+                flex-direction: column;
+                padding: 3em;
+                background-color: white;
+                width: 60%;
+                color: black;
+                justify-content: left;
+                align-items: left;
+                align-content: left;
+            }
+
+            .pregunta {
+                margin: 10px;
+            }
+
+            form p {
+                font-weight: bold;
+            }
+
+            #boton {
+                display: flex;
+                padding: 1em;
+                width: 20%;
+                border: none;
+                border-radius: 5px;
+                background-color: #fcda59;
+                color: black;
+                font-weight: bold;
+                justify-content: center;
+                align-items: center;
+                position: relative;
+                top: 50%;
+                left: 40%;
+
+
+            }
+
+            #boton:hover {
+                background-color: #fdd306;
+            }
+
+            .cronometro {
+                padding: 1em;
+                width: 8%;
+                border: black;
+                border: 2px solid black;
+                border-radius: 10px;
+                background-color: #fcda59;
+                color: black;
+                font-weight: bold;
+                font-family: 'Montserrat', sans-serif;
+                margin: 10px;
+                float: right;
+                position: fixed;
+                top: 40%;
+                right: 80px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                align-content: center;
+                z-index: +2 !important;
+            }
+
+            .titulo1 {
+                font-family: 'Montserrat', sans-serif;
+                text-align: center;
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            .titulo2 {
+                font-family: 'Montserrat', sans-serif;
+                text-align: center;
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            .datos-ingre input {
+                padding: 0.5em;
+                border: 1px solid #c5c3c2;
+
+                border-radius: 5px;
+                color: black;
+                font-weight: bold;
+                justify-content: center;
+                align-items: center;
+                align-content: center;
+
+            }
+
+            .datos-ingre {
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                margin-bottom: 2em;
+            }
+
+            .datos-ingre div {
+                display: flex;
+                flex-direction: column;
+                text-align: left;
+                justify-content: flex-start;
+                overflow: hidden;
+                gap: 5px;
+                width: calc(100% / 3.3);
+            }
+
+            .audio {
+                width: 500;
+                height: 150px;
+                border: none;
+                border-radius: 0.4em;
+            }
+
+            .video {
+                width: 500px;
+                height: 300px;
+                border: none;
+                border-radius: 0.4em;
+            }
+        </style>
+
+        <form th:action="@{/examen/save}" method="post" id="myForm" th:object="${examen}">
+            <div class="datos-ingre">
+                <div>
+                    <label for="nombre">Nombre</label>
+                    <input type="text" name="nombre" id="nombre" th:field="*{nombre}" readonly>
+                </div>
+                <div>
+                    <label for="apellido">Apellido</label>
+                    <input type="text" name="apellido" id="apellido" th:field="*{apellido}" readonly>
+                </div>
+                <div>
+                    <label for="numDoc">Documento</label>
+                    <input type="text" name="numDoc" id="numDoc" th:field="*{numDoc}" readonly>
+                </div>
+                <div style="display: none;">
+                    <label for="id_ingresante" hidden>id Ingresante</label>
+                    <input type="number" name="id_ingresante" id="id_ingresante" th:field="*{id_ingresante}" hidden
+                        readonly>
+                    <label for="id" hidden>id examen</label>
+                    <input type="number" name="id" id="id" th:field="*{id}" hidden readonly>
+                </div>
+            </div>
+            <div class="pregunta">
+
+                <p><b>1)</b> A: Hello <br>B: Hi, How are you? <br> A:___________ </p>
+                <input type="radio" name="p1" id="p1-a" th:value="a" th:field="*{p1}"><label for="p1-a">I'm nine.
+                </label><br>
+                <input type="radio" name="p1" id="p1-b" th:value="b" th:field="*{p1}"><label for="p1-b">You are
+                    welcome</label><br>
+                <input type="radio" name="p1" id="p1-c" th:value="c" th:field="*{p1}"><label for="p1-c">Fine thank you,
+                    and
+                    you?</label><br>
+                <input type="radio" name="p1" id="p1-d" th:value="d" th:field="*{p1}"><label for="p1-d">Good
+                    bye.</label><br>
+            </div>
+            <div class="pregunta">
+
+                <p><b>2)</b> Kelly and Sue ________ 15 years old. </p>
+                <input type="radio" name="p2" id="p2-a" th:value="a" th:field="*{p2}"><label for="p2-a">will</label><br>
+                <input type="radio" name="p2" id="p2-b" th:value="b" th:field="*{p2}"><label for="p2-b">are</label><br>
+                <input type="radio" name="p2" id="p2-c" th:value="c" th:field="*{p2}"><label for="p2-c">is</label><br>
+                <input type="radio" name="p2" id="p2-d" th:value="d" th:field="*{p2}"><label for="p2-d">have</label><br>
+            </div>
+            <div class="pregunta">
+
+                <p> <b>3)</b> John has got one cat _______</p>
+                <input type="radio" name="p3" id="p3-a" th:value="a" th:field="*{p3}"><label for="p3-a">but two
+                    cats.</label><br>
+                <input type="radio" name="p3" id="p3-b" th:value="b" th:field="*{p3}"><label for="p3-b">and three
+                    cats.</label><br>
+                <input type="radio" name="p3" id="p3-c" th:value="c" th:field="*{p3}"><label for="p3-c">and two
+                    dogs.</label><br>
+                <input type="radio" name="p3" id="p3-d" th:value="d" th:field="*{p3}"><label for="p3-b">or many
+                    cats.</label><br>
+            </div>
+            <div class="pregunta">
+
+                <p><b>4)</b> My bag is_______ the chair. </p>
+                <input type="radio" name="p4" id="p4-a" th:value="a" th:field="*{p4}"><label for="p4-a">on</label><br>
+                <input type="radio" name="p4" id="p4-b" th:value="b" th:field="*{p4}"><label for="p4-b">in</label><br>
+                <input type="radio" name="p4" id="p4-c" th:value="c" th:field="*{p4}"><label for="p4-c">from</label><br>
+                <input type="radio" name="p4" id="p4-d" th:value="d" th:field="*{p4}"><label
+                    for="p4-d">between</label><br>
+            </div>
+            <div class="pregunta">
+                <h2>Listen and answer:</h2>
+                <iframe class="audio" src="https://drive.google.com/file/d/1XrJf0KUCEGy4K-aU_nB9S1rqwiUvnuFz/preview"
+                width="640" height="480" allow="autoplay"></iframe><br>
+                <p><b>5)</b> "It costs ________"</p>
+               
+
+                <input type="radio" name="p5" id="p5-a" th:value="a" th:field="*{p5}"><label for="p5-a">Є 13
+                </label><br>
+                <input type="radio" name="p5" id="p5-b" th:value="b" th:field="*{p5}"><label for="p5-b">Є 33</label><br>
+                <input type="radio" name="p5" id="p5-c" th:value="c" th:field="*{p5}"><label for="p5-c">Є 3</label><br>
+                <input type="radio" name="p5" id="p5-d" th:value="d" th:field="*{p5}"><label for="p5-d">Є 30</label><br>
+            </div>
+            <div class="pregunta">
+
+                <p><b>6)</b> I ____________ this coffee. It tastes horrible. </p>
+                <input type="radio" name="p6" id="p6-a" th:value="a" th:field="*{p6}"><label for="p6-a">am not
+                    like</label><br>
+                <input type="radio" name="p6" id="p6-b" th:value="b" th:field="*{p6}"><label for="p6-b">don't
+                    like</label><br>
+                <input type="radio" name="p6" id="p6-c" th:value="c" th:field="*{p6}"><label for="p6-c">am not
+                    liking</label><br>
+                <input type="radio" name="p6" id="p6-d" th:value="d" th:field="*{p6}"><label for="p6-d">not
+                    like</label><br>
+            </div>
+            <div class="pregunta">
+
+                <p><b>7)</b> Can you _______ the lights, I can't see. </p>
+                <input type="radio" name="p7" id="p7-a" th:value="a" th:field="*{p7}"><label for="p7-a">turn
+                    on</label><br>
+                <input type="radio" name="p7" id="p7-b" th:value="b" th:field="*{p7}"><label
+                    for="p7-b">start</label><br>
+                <input type="radio" name="p7" id="p7-c" th:value="c" th:field="*{p7}"><label for="p7-c">open</label><br>
+                <input type="radio" name="p7" id="p7-d" th:value="d" th:field="*{p7}"><label for="p7-d">put
+                    on</label><br>
+            </div>
+            <div class="pregunta">
+
+                <p><b>8)</b> ______ are very interlligent.</p>
+                <input type="radio" name="p8" id="p8-a" th:value="a" th:field="*{p8}"><label for="p8-a">A
+                    dolphin</label><br>
+                <input type="radio" name="p8" id="p8-b" th:value="b" th:field="*{p8}"><label for="p8-b">The
+                    dolphin</label><br>
+                <input type="radio" name="p8" id="p8-c" th:value="c" th:field="*{p8}"><label
+                    for="p8-c">Dolphins</label><br>
+                <input type="radio" name="p8" id="p8-d" th:value="d" th:field="*{p8}"><label for="p8-d">An
+                    dolphins</label><br>
+            </div>
+            <div class="pregunta">
+
+                <p><b>9)</b> The test is ____________ February</p>
+                <input type="radio" name="p9" id="p9-a" th:value="a" th:field="*{p9}"><label for="p9-a">over</label><br>
+                <input type="radio" name="p9" id="p9-b" th:value="b" th:field="*{p9}"><label for="p9-b">on</label><br>
+                <input type="radio" name="p9" id="p9-c" th:value="c" th:field="*{p9}"><label for="p9-c">at</label><br>
+                <input type="radio" name="p9" id="p9-d" th:value="d" th:field="*{p9}"><label for="p9-d">in</label><br>
+            </div>
+            <div class="pregunta">
+                <h2> Listen and answer:</h2>
+                <iframe class="audio" src="https://drive.google.com/file/d/1dxnBAHBs22eO95wZZ9fSWLWP-p_u6mWv/preview"
+                width="640" height="480" allow="autoplay"></iframe><br>
+                <p><b>10)</b> Listen and answer: <br> A: "What's your name?"<br> B: " I'm Sara_________"</p>
+                
+                <input type="radio" name="p10" id="p10-a" th:value="a" th:field="*{p10}"><label
+                    for="p10-a">Jenley</label><br>
+                <input type="radio" name="p10" id="p10-b" th:value="b" th:field="*{p10}"><label
+                    for="p10-b">Henlei</label><br>
+                <input type="radio" name="p10" id="p10-c" th:value="c" th:field="*{p10}"><label
+                    for="p10-c">Hamley</label><br>
+                <input type="radio" name="p10" id="p10-d" th:value="d" th:field="*{p10}"><label
+                    for="p10-d">Henley</label><br>
+            </div>
+            <div class="pregunta">
+
+                <p><b>11)</b> Where___________________?</p>
+                <input type="radio" name="p11" id="p11-a" th:value="a" th:field="*{p11}"><label for="p11-a">she
+                    works</label><br>
+                <input type="radio" name="p11" id="p11-b" th:value="b" th:field="*{p11}"><label for="p11-b">she
+                    work</label><br>
+                <input type="radio" name="p11" id="p11-c" th:value="c" th:field="*{p11}"><label for="p11-c">does she
+                    work</label><br>
+                <input type="radio" name="p11" id="p11-d" th:value="d" th:field="*{p11}"><label for="p11-d">do she
+                    work</label><br>
+            </div>
+            <div class="pregunta">
+
+                <p><b>12)</b> A: "How old________?"<br> B: " I_______"</p>
+                <input type="radio" name="p12" id="p12-a" th:value="a" th:field="*{p12}"><label for="p12-a">are you/
+                    have 20 years old. </label><br>
+                <input type="radio" name="p12" id="p12-b" th:value="b" th:field="*{p12}"><label for="p12-b">are you/ am
+                    20 years old. </label><br>
+                <input type="radio" name="p12" id="p12-c" th:value="c" th:field="*{p12}"><label for="p12-c">do you have/
+                    am 20 years.</label><br>
+                <input type="radio" name="p12" id="p12-d" th:value="d" th:field="*{p12}"><label for="p12-d">are you/ has
+                    20 old. </label><br>
+            </div>
+            <div class="pregunta">
+
+                <p><b>13)</b> We usually meet ___________ 8 AM. </p>
+                <input type="radio" name="p13" id="p13-a" th:value="a" th:field="*{p13}"><label for="p13-a">in
+                </label><br>
+                <input type="radio" name="p13" id="p13-b" th:value="b" th:field="*{p13}"><label
+                    for="p13-b">on</label><br>
+                <input type="radio" name="p13" id="p13-c" th:value="c" th:field="*{p13}"><label
+                    for="p13-c">between</label><br>
+                <input type="radio" name="p13" id="p13-d" th:value="d" th:field="*{p13}"><label
+                    for="p13-d">at</label><br>
+            </div>
+            <div class="pregunta">
+
+                <p><b>14)</b> This is _______ car. </p>
+                <input type="radio" name="p14" id="p14-a" th:value="a" th:field="*{p14}"><label
+                    for="p14-a">me</label><br>
+                <input type="radio" name="p14" id="p14-b" th:value="b" th:field="*{p14}"><label
+                    for="p14-b">mine</label><br>
+                <input type="radio" name="p14" id="p14-c" th:value="c" th:field="*{p14}"><label
+                    for="p14-c">my</label><br>
+                <input type="radio" name="p14" id="p14-d" th:value="d" th:field="*{p14}"><label
+                    for="p14-d">an</label><br>
+            </div>
+            <div class="pregunta">
+
+                <p> <b>15)</b>English classes are ____________ Mondays</p>
+                <input type="radio" name="p15" id="p15-a" th:value="a" th:field="*{p15}"><label
+                    for="p15-a">on</label><br>
+                <input type="radio" name="p15" id="p15-b" th:value="b" th:field="*{p15}"><label for="p15-b">in
+                </label><br>
+                <input type="radio" name="p15" id="p15-c" th:value="c" th:field="*{p15}"><label
+                    for="p15-c">at</label><br>
+                <input type="radio" name="p15" id="p15-d" th:value="d" th:field="*{p15}"><label
+                    for="p15-d">for</label><br>
+            </div>
+            <div class="pregunta">
+           <h2>Watch the video and answer questions 16, 17, 18, 19: </h2>
+           <iframe class="video" src="https://drive.google.com/file/d/1Sq0q9Fe2_TpUu-MsPnbhr8q808Kc1LcN/preview"
+           allow="autoplay"></iframe><br>
+                <p><b>16)</b>  What time is the class?</p>
+              
+                <input type="radio" name="p16" id="p16-a" th:value="a" th:field="*{p16}"><label for="p16-a">Half past
+                    nine.</label><br>
+                <input type="radio" name="p16" id="p16-b" th:value="b" th:field="*{p16}"><label for="p16-b">Quarter past
+                    nine.</label><br>
+                <input type="radio" name="p16" id="p16-c" th:value="c" th:field="*{p16}"><label for="p16-c">Nine
+                    o'clock</label><br>
+                <input type="radio" name="p16" id="p16-d" th:value="d" th:field="*{p16}"><label for="p16-d">Quarter to
+                    nine.</label><br>
+            </div>
+            <div class="pregunta">
+
+                <p><b>17)</b> The girl's name is_______</p>
+                <input type="radio" name="p17" id="p17" th:value="a" th:field="*{p17}"><label
+                    for="p17-a">Molly</label><br>
+                <input type="radio" name="p17" id="p17" th:value="b" th:field="*{p17}"><label
+                    for="p17-b">Hally</label><br>
+                <input type="radio" name="p17" id="p17" th:value="c" th:field="*{p17}"><label
+                    for="p17-c">Moli</label><br>
+                <input type="radio" name="p17" id="p17" th:value="d" th:field="*{p17}"><label
+                    for="p17-d">Nolly</label><br>
+            </div>
+            <div class="pregunta">
+
+                <p><b>18)</b> The first teacher is _______</p>
+                <input type="radio" name="p18" id="p18-a" th:value="a" th:field="*{p18}"><label for="p18-a">Mrs
+                    Lin</label><br>
+                <input type="radio" name="p18" id="p18-b" th:value="b" th:field="*{p18}"><label for="p18-b">Mrs
+                    Taylor</label><br>
+                <input type="radio" name="p18" id="p18-c" th:value="c" th:field="*{p18}"><label for="p18-c">Mrs
+                    Sailor</label><br>
+                <input type="radio" name="p18" id="p18-d" th:value="d" th:field="*{p18}"><label for="p18-d">Mrs
+                    Smith</label><br>
+            </div>
+            <div class="pregunta">
+
+                <p><b>19) </b>Which is the correct classroom?</p>
+                <input type="radio" name="p19" id="p19-a" th:value="a" th:field="*{p19}"><label
+                    for="p19-a">230</label><br>
+                <input type="radio" name="p19" id="p19-b" th:value="b" th:field="*{p19}"><label
+                    for="p19-b">203</label><br>
+                <input type="radio" name="p19" id="p19-c" th:value="c" th:field="*{p19}"><label
+                    for="p19-c">233</label><br>
+                <input type="radio" name="p19" id="p19-d" th:value="d" th:field="*{p19}"><label
+                    for="p19-d">23</label><br>
+            </div>
+            <div class="pregunta">
+                <h2>Listen and answer: </h2>
+                <iframe class="audio" src="https://drive.google.com/file/d/11BVTur0DR3Bj8Lsfpli3nJSjLc5roMdB/preview"
+                    width="640" height="480" allow="autoplay"></iframe><br>
+                <p><b>20)</b> It has _______________ employees.</p>
+
+                <input type="radio" name="p20" id="p20-a" th:value="a" th:field="*{p20}"><label
+                    for="p20-a">100</label><br>
+                <input type="radio" name="p20" id="p20-b" th:value="b" th:field="*{p20}"><label
+                    for="p20-b">110</label><br>
+                <input type="radio" name="p20" id="p20-c" th:value="c" th:field="*{p20}"><label
+                    for="p20-c">10000</label><br>
+                <input type="radio" name="p20" id="p20-d" th:value="d" th:field="*{p20}"><label
+                    for="p20-d">1000</label><br>
+            </div>
+
+            <input id="boton" type="submit" value="FINALIZAR">
+        </form>
+    </div>
+    <script>
+        let minadd = 45;
+        let countDownDate = new Date().getTime() + minadd * 60000;
+
+        console.log(countDownDate);
+
+
+        setInterval(() => {
+            // Get Date Now
+            let dateNow = new Date().getTime();
+
+            // Find The Date Difference Between Now And Countdown Date
+            let dateDiff = countDownDate - dateNow;
+
+            // Get Time Units
+
+            let days = Math.floor(dateDiff / (1000 * 60 * 60 * 24));
+            let hours = Math.floor((dateDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let minutes = Math.floor((dateDiff % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((dateDiff % (1000 * 60)) / 1000);
+
+            document.querySelector(".days").innerHTML = days < 10 ? `0${days}` : days;
+            document.querySelector(".hours").innerHTML = hours < 10 ? `0${hours}` : hours;
+            document.querySelector(".minutes").innerHTML = minutes < 10 ? `0${minutes}` : minutes;
+            document.querySelector(".seconds").innerHTML = seconds < 10 ? `0${seconds}` : seconds;
+
+            if (dateDiff < 0) {
+                document.getElementById("myForm").submit();
+            }
+        }, 1000);
+
+    </script>
+
+
+    <footer th:replace="/navfoo :: footing"></footer>
+</body>
+
+</html>
